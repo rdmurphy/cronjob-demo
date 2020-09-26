@@ -1,0 +1,22 @@
+name: Run cronjob
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Run scraper
+        id: scraper
+        run: date +"%s" > timestamp.txt
+
+      - name: Commit to GitHub
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updated timestamp.txt
+          file_pattern: timestamp.txt
